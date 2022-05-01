@@ -50,15 +50,23 @@ plt.title("Гистограмма и полигон частотостей")
 num = int(1 + math.log2(len(data)))
 h = (data[-1] - data[0]) / num
 blocks = []
+int_row = []
 for i in range(num + 1):
     blocks.append(data[0] + i * h)
+    if i != 0:
+        int_row.append(['[' + (str)(data[0] + (i-1) * h) + ',' + (str)(data[0] + i * h) + ')', 0, 0])
 blocks_per = []
 for i in range(num):
     cou = 0
     for j in data:
         if j >= blocks[i] and j < blocks[i + 1]:
            cou += 1
+    int_row[i][1] = cou
+    int_row[i][2] = cou/len(data)
     blocks_per.append(cou/len(data))
+print('Интервальный ряд')
+print(tabulate(int_row, tablefmt="grid"))
+
 tost = []
 for i in range(num + 1):
     tost.append(data[0] + i * h)
